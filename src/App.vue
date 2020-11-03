@@ -1,9 +1,12 @@
 <template>
   <div id="app">
-    <h1>111</h1>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
-<style lang="scss">
-</style>
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({})
+</script>
+
+<style lang="scss"></style>
