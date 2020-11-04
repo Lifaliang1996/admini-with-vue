@@ -7,7 +7,7 @@
 <script>
 import Vue from 'vue'
 export default Vue.extend({
-  name: '404'
+  name: 'Error404'
 })
 </script>
 
