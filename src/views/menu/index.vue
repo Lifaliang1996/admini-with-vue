@@ -1,14 +1,96 @@
 <template>
   <div>
-    <h1>Menu</h1>
+    <el-card class="box-card">
+      <div slot="header">
+        <el-button size="small" @click="$router.push({ name: 'menu-create' })"
+          >添加菜单</el-button
+        >
+      </div>
+      <el-table :data="allMenu" style="width: 100%">
+        <el-table-column
+          type="index"
+          align="center"
+          label="序号"
+        ></el-table-column>
+        <el-table-column
+          prop="name"
+          align="center"
+          label="菜单名称"
+        ></el-table-column>
+        <el-table-column
+          prop="level"
+          align="center"
+          label="菜单级数"
+        ></el-table-column>
+        <el-table-column
+          prop="icon"
+          align="center"
+          label="前端图标"
+        ></el-table-column>
+        <el-table-column
+          prop="orderNum"
+          align="center"
+          label="排序"
+        ></el-table-column>
+        <el-table-column label="操作" align="center" min-width="150px">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+              >编辑</el-button
+            >
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row, $event)"
+              >删除</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
+import { getAllMenu, deleteMenu } from '@/network/menu'
+
 export default Vue.extend({
-  name: 'MenuIndex'
+  name: 'MenuIndex',
+  data () {
+    return {
+      allMenu: []
+    }
+  },
+
+  created () {
+    this.loadAllMenu()
+  },
+
+  methods: {
+    // 加载所有菜单
+    async loadAllMenu () {
+      try {
+        const { data } = await getAllMenu()
+        if (data.code === '000000') {
+          this.allMenu = data.data
+        }
+      } catch (error) {}
+    },
+    async handleEdit () {
+      console.log('edit')
+    },
+    async handleDelete (index: number, menu: Record<string, number>) {
+      try {
+        await this.$confirm('确定要删除此菜单吗？', '提示')
+        const { data } = await deleteMenu(menu.id)
+        if (data.code === '000000') {
+          this.$message.success('删除成功')
+          this.allMenu.splice(index, 1)
+        }
+      } catch (error) {}
+    }
+  }
 })
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

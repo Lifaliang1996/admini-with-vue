@@ -70,8 +70,8 @@ export default Vue.extend({
           this.$message.success('登录成功！')
 
           // 重定向到之前的页面或首页
-          const toName = this.$route.query.to as string || 'home'
-          this.$router.push({ name: toName })
+          const backPath = this.$route.query.back as string || '/'
+          this.$router.push(backPath)
         }
       } catch (error) {}
 

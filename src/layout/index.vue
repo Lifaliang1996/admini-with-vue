@@ -30,7 +30,7 @@ export default Vue.extend({
 
 <style scoped>
 .layout {
-  min-height: 100vh;
+  height: 100vh;
   min-width: 980px;
 }
 
@@ -39,6 +39,7 @@ export default Vue.extend({
 }
 
 .el-aside {
+  height: 100%;
   background-color: #d3dce6;
 }
 

@@ -8,7 +8,7 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/boos': {
+      '/boss': {
         target: 'http://eduboss.lagou.com',
         changeOrigin: true
       },

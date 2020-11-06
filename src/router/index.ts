@@ -37,6 +37,12 @@ const routes: Array<RouteConfig> = [
           import(/* webpackChunkName: 'menu' */ '@/views/menu/index.vue')
       },
       {
+        path: '/menu/create',
+        name: 'menu-create',
+        component: () =>
+          import(/* webpackChunkName: 'menu-create' */ '@/views/menu/create.vue')
+      },
+      {
         path: '/resource',
         name: 'resource',
         component: () =>
@@ -92,7 +98,7 @@ router.beforeEach((to, from, next) => {
     if (store.state.user) {
       next()
     } else {
-      next({ name: 'login', query: { to: to.name } })
+      next({ name: 'login', query: { back: to.fullPath } })
     }
   } else {
     next()

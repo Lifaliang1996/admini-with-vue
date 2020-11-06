@@ -17,3 +17,9 @@ export const login = (user: User) => {
 }
 
 // 获取登录用户信息
+export const getUserInfo = () => {
+  return request({
+    method: 'GET',
+    url: '/front/user/getInfo'
+  })
+}
