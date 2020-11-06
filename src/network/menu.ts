@@ -10,7 +10,7 @@ export const createOrUpdateMenu = (data: Record<string, any>) => {
 }
 
 // 获取编辑页菜单
-export const getEditMenuInfo = (id = -1) => {
+export const getEditMenuInfo = (id: number | string = -1) => {
   return request({
     method: 'GET',
     url: '/boss/menu/getEditMenuInfo',

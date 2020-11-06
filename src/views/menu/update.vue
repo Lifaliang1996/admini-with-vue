@@ -1,5 +1,5 @@
 <template>
-  <menu-create-update />
+  <menu-create-update :isUpdate="true" />
 </template>
 
 <script lang="ts">
@@ -7,7 +7,7 @@ import Vue from 'vue'
 import MenuCreateUpdate from './components/CreateOrUpdate.vue'
 
 export default Vue.extend({
-  name: 'MenuCreate',
+  name: 'MenuUpdate',
   components: {
     MenuCreateUpdate
   }

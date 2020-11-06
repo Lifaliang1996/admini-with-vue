@@ -1,8 +1,8 @@
 <template>
   <div class="header">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+      <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
+      <el-breadcrumb-item v-for="item in breadcrumb" :key="item.path" :to="item.path">{{ item.title }}</el-breadcrumb-item>
     </el-breadcrumb>
     <el-dropdown>
       <span class="el-dropdown-link">
@@ -31,9 +31,17 @@ export default Vue.extend({
       userInfo: {}
     }
   },
+
+  computed: {
+    breadcrumb () {
+      return this.$route.meta.breadcrumb
+    }
+  },
+
   created () {
     this.loadUserInfo()
   },
+
   methods: {
     // 加载登录用户信息
     async loadUserInfo () {

@@ -34,13 +34,38 @@ const routes: Array<RouteConfig> = [
         path: '/menu',
         name: 'menu',
         component: () =>
-          import(/* webpackChunkName: 'menu' */ '@/views/menu/index.vue')
+          import(/* webpackChunkName: 'menu' */ '@/views/menu/index.vue'),
+        meta: {
+          breadcrumb: [{ title: '菜单管理', path: '' }]
+        }
       },
       {
         path: '/menu/create',
         name: 'menu-create',
         component: () =>
-          import(/* webpackChunkName: 'menu-create' */ '@/views/menu/create.vue')
+          import(
+            /* webpackChunkName: 'menu-create-update' */ '@/views/menu/create.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '菜单管理', path: '/menu' },
+            { title: '添加菜单', path: '' }
+          ]
+        }
+      },
+      {
+        path: '/menu/update/:id',
+        name: 'menu-update',
+        component: () =>
+          import(
+            /* webpackChunkName: 'menu-create-update' */ '@/views/menu/update.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '菜单管理', path: '/menu' },
+            { title: '编辑菜单', path: '' }
+          ]
+        }
       },
       {
         path: '/resource',
