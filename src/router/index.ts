@@ -73,7 +73,49 @@ const routes: Array<RouteConfig> = [
         component: () =>
           import(
             /* webpackChunkName: 'resource' */ '@/views/resource/index.vue'
-          )
+          ),
+        meta: {
+          breadcrumb: [{ title: '资源管理', path: '' }]
+        }
+      },
+      {
+        path: '/resource/category',
+        name: 'resource-category',
+        component: () =>
+          import(
+            /* webpackChunkName: 'resource-category' */ '@/views/resource/category.vue'
+          ),
+        meta: {
+          breadcrumb: [{ title: '资源管理', path: '/resource' }, { title: '资源分类', path: '' }]
+        }
+      },
+      {
+        path: '/resource/create',
+        name: 'resource-create',
+        component: () =>
+          import(
+            /* webpackChunkName: 'resource-create-update' */ '@/views/resource/create.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '资源管理', path: '/resource' },
+            { title: '添加资源', path: '' }
+          ]
+        }
+      },
+      {
+        path: '/resource/update/:id',
+        name: 'resource-update',
+        component: () =>
+          import(
+            /* webpackChunkName: 'resource-create-update' */ '@/views/resource/update.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '资源管理', path: '/resource' },
+            { title: '修改资源', path: '' }
+          ]
+        }
       },
       {
         path: '/course',
