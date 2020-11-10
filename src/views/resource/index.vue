@@ -37,27 +37,36 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-button @click="search" type="primary" size="small">查询搜索</el-button>
-        <el-button @click="reset" size="small" style="margin-left: 20px">重置</el-button>
+        <el-button @click="search" type="primary" size="small"
+          >查询搜索</el-button
+        >
+        <el-button @click="reset" size="small" style="margin-left: 20px"
+          >重置</el-button
+        >
       </el-form>
     </el-card>
 
     <!-- 操作选项 -->
     <el-card shadow="never">
       <div style="margin-bottom: 5px;">
-        <el-button @click="$router.push({ name: 'resource-create' })" type="primary" size="small">添加</el-button>
-        <el-button @click="$router.push({ name: 'resource-category' })" size="small">资源分类</el-button>
+        <el-button
+          @click="$router.push({ name: 'resource-create' })"
+          type="primary"
+          size="small"
+          >添加</el-button
+        >
+        <el-button
+          @click="$router.push({ name: 'resource-category' })"
+          size="small"
+          >资源分类</el-button
+        >
       </div>
     </el-card>
 
     <!-- 资源列表 -->
     <el-card shadow="never">
       <el-table v-loading="isLoading" :data="resources" style="width: 100%">
-        <el-table-column
-          prop="id"
-          align="center"
-          label="ID"
-        ></el-table-column>
+        <el-table-column prop="id" align="center" label="ID"></el-table-column>
         <el-table-column
           prop="name"
           align="center"
@@ -114,7 +123,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Form } from 'element-ui'
-import { getResourcePages, deleteResource, getAllCategory } from '@/network/resource'
+import {
+  getResourcePages,
+  deleteResource,
+  getAllCategory
+} from '@/network/resource'
 
 export default Vue.extend({
   name: 'ResourceIndex',
@@ -202,7 +215,16 @@ export default Vue.extend({
     },
     // 重置查询状态
     reset () {
-      (this.$refs.searchForm as Form).resetFields()
+      this.form = {
+        id: '',
+        name: '',
+        startCreateTime: '',
+        url: '',
+        categoryId: '',
+        endCreateTime: '',
+        current: 1,
+        size: 10
+      }
       this.form.current = 1
       this.loadResources()
     }

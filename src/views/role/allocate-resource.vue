@@ -14,8 +14,8 @@
     >
     </el-tree>
     <div style="margin-top: 40px; padding: 0 20px;">
-      <el-button @click="resetChecked">清空</el-button>
-      <el-button @click="handleAllocate" type="primary">提交</el-button>
+      <el-button @click="resetChecked">清 空</el-button>
+      <el-button @click="handleAllocate" type="primary">提 交</el-button>
     </div>
   </el-card>
 </template>

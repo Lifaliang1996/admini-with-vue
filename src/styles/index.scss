@@ -42,6 +42,12 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   color: #868e96;
 }
 
+.el-button--text {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 // components
 
 .status {

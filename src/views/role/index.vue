@@ -218,10 +218,4 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
-.el-button--text {
-  &:hover {
-    text-decoration: underline;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

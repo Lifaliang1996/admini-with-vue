@@ -23,3 +23,34 @@ export const getUserInfo = () => {
     url: '/front/user/getInfo'
   })
 }
+
+// 查询用户列表
+export const getUserPages = (data: object) => {
+  return request({
+    method: 'POST',
+    url: '/boss/user/getUserPages',
+    data
+  })
+}
+
+// 禁用用户
+export const forbidUser = (userId: number) => {
+  return request({
+    method: 'GET',
+    url: '/boss/user/forbidUser',
+    params: {
+      userId
+    }
+  })
+}
+
+// 启用用户
+export const enableUser = (userId: number) => {
+  return request({
+    method: 'GET',
+    url: '/boss/user/enableUser',
+    params: {
+      userId
+    }
+  })
+}

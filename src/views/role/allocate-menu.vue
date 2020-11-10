@@ -14,8 +14,8 @@
     >
     </el-tree>
     <div style="margin-top: 40px; padding: 0 20px;">
-      <el-button @click="resetChecked">清空</el-button>
-      <el-button @click="handleAllocate" type="primary">提交</el-button>
+      <el-button @click="resetChecked">清 空</el-button>
+      <el-button @click="handleAllocate" type="primary">提 交</el-button>
     </div>
   </el-card>
 </template>
@@ -78,7 +78,7 @@ export default Vue.extend({
     },
     // 清空选中
     resetChecked () {
-      (this.$refs.menusTree as Tree).setCheckedKeys([])
+      ;(this.$refs.menusTree as Tree).setCheckedKeys([])
     },
     // 提交分配菜单
     async handleAllocate () {
@@ -92,9 +92,7 @@ export default Vue.extend({
             name: 'role'
           })
         }
-      } catch (error) {
-        this.$message.error('操作失败，请重试')
-      }
+      } catch (error) {}
       this.isLoading = false
     }
   }

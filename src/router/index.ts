@@ -163,7 +163,10 @@ const routes: Array<RouteConfig> = [
         path: '/user',
         name: 'user',
         component: () =>
-          import(/* webpackChunkName: 'user' */ '@/views/user/index.vue')
+          import(/* webpackChunkName: 'user' */ '@/views/user/index.vue'),
+        meta: {
+          breadcrumb: [{ title: '用户管理', path: '' }]
+        }
       },
       {
         path: '/advert',
