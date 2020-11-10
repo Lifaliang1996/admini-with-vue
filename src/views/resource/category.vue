@@ -46,7 +46,7 @@
 
     <el-dialog
       @open="handleOpened"
-      @close="handleClosed"
+      @closed="handleClosed"
       :title="isUpdate ? '修改分类' : '添加分类'"
       :visible.sync="dialogFormVisible"
       style="min-width: 980px;"

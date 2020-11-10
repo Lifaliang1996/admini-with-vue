@@ -64,3 +64,26 @@ export const deleteCategory = (id: number | string) => {
     url: `/boss/resource/category/${id}`
   })
 }
+
+// 获取角色拥有的资源
+export const getRoleResources = (roleId: number | string) => {
+  return request({
+    method: 'GET',
+    url: '/boss/resource/getRoleResources',
+    params: {
+      roleId
+    }
+  })
+}
+
+// 给角色分配资源
+export const allocateRoleResources = (roleId: number | string, resourceIdList: Array<number | string>) => {
+  return request({
+    method: 'POST',
+    url: '/boss/resource/allocateRoleResources',
+    data: {
+      roleId,
+      resourceIdList
+    }
+  })
+}

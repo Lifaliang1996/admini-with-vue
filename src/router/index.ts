@@ -28,7 +28,40 @@ const routes: Array<RouteConfig> = [
         path: '/role',
         name: 'role',
         component: () =>
-          import(/* webpackChunkName: 'role' */ '@/views/role/index.vue')
+          import(/* webpackChunkName: 'role' */ '@/views/role/index.vue'),
+        meta: {
+          breadcrumb: [{ title: '角色管理', path: '' }]
+        }
+      },
+      {
+        path: '/role/allocate-menu/:roleId',
+        name: 'role-allocate-menu',
+        component: () =>
+          import(
+            /* webpackChunkName: 'role-allocate-menu' */ '@/views/role/allocate-menu.vue'
+          ),
+        props: true,
+        meta: {
+          breadcrumb: [
+            { title: '角色管理', path: '/role' },
+            { title: '分配菜单', path: '' }
+          ]
+        }
+      },
+      {
+        path: '/role/allocate-resource/:roleId',
+        name: 'role-allocate-resource',
+        component: () =>
+          import(
+            /* webpackChunkName: 'role-allocate-resource' */ '@/views/role/allocate-resource.vue'
+          ),
+        props: true,
+        meta: {
+          breadcrumb: [
+            { title: '角色管理', path: '/role' },
+            { title: '分配资源', path: '' }
+          ]
+        }
       },
       {
         path: '/menu',
@@ -86,7 +119,10 @@ const routes: Array<RouteConfig> = [
             /* webpackChunkName: 'resource-category' */ '@/views/resource/category.vue'
           ),
         meta: {
-          breadcrumb: [{ title: '资源管理', path: '/resource' }, { title: '资源分类', path: '' }]
+          breadcrumb: [
+            { title: '资源管理', path: '/resource' },
+            { title: '资源分类', path: '' }
+          ]
         }
       },
       {
