@@ -55,7 +55,7 @@
           label="课程名称"
         ></el-table-column>
         <el-table-column align="center" label="价格">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <span>{{ scope.row.price | formatPrice }}</span>
           </template>
         </el-table-column>
@@ -65,7 +65,7 @@
           label="排序"
         ></el-table-column>
         <el-table-column align="center" label="状态" width="80">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-switch
               @change="handleChangeStatus(scope.row)"
               v-model="scope.row.status"
@@ -80,7 +80,7 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-button
               @click="
                 $router.push({
@@ -93,7 +93,18 @@
               size="mini"
               >编辑</el-button
             >
-            <el-button size="mini">内容管理</el-button>
+            <el-button
+              @click="
+                $router.push({
+                  name: 'course-section',
+                  params: {
+                    courseId: scope.row.id
+                  }
+                })
+              "
+              size="mini"
+              >内容管理</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -180,7 +191,7 @@ export default Vue.extend({
     async handleChangeStatus (course: any) {
       course.isChangeLoading = true
       try {
-        const { data } = await changeState(course.id, course.status)
+        await changeState(course.id, course.status)
         this.$message.success(course.status === 0 ? '下架成功' : '上架成功')
       } catch (error) {}
       course.isChangeLoading = false

@@ -34,7 +34,7 @@
           label="添加时间"
         ></el-table-column>
         <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-row>
               <el-button
                 @click="

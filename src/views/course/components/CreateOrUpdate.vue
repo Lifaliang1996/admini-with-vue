@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card>
+    <el-card v-loading="isLoading">
       <!-- 步骤条 -->
       <div slot="header">
         <el-steps :active="stepActive" finish-status="success" simple>
@@ -72,7 +72,7 @@
           </el-form-item>
           <el-form-item label="课程排序" prop="sortNum">
             <el-input v-model="course.sortNum" type="number">
-              <template slot="append">数字控制排序，数字越大越靠后</template>
+              <template #append>数字控制排序，数字越大越靠后</template>
             </el-input>
           </el-form-item>
         </div>
@@ -209,7 +209,7 @@ export default Vue.extend({
   data () {
     return {
       stepTitles: ['基本信息', '课程封面', '销售信息', '秒杀活动', '课程详情'],
-      stepActive: 4,
+      stepActive: 0,
       course: {
         // id: 0,
         courseName: '',
@@ -281,12 +281,22 @@ export default Vue.extend({
 
   methods: {
     async loadCourse () {
+      this.isLoading = true
       try {
         const { data } = await getCourseById(this.courseId)
-        if (data.code === '000000') {
+        if (data.data) {
+          if (!data.data.activityCourseDTO) {
+            data.data.activityCourseDTO = {
+              beginTime: '',
+              endTime: '',
+              amount: 0,
+              stock: 0
+            }
+          }
           this.course = data.data
         }
       } catch {}
+      this.isLoading = false
     },
 
     async nextStep () {

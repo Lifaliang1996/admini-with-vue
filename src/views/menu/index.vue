@@ -39,7 +39,7 @@
           label="排序"
         ></el-table-column>
         <el-table-column label="操作" align="center" min-width="150">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-button size="mini" @click="handleEdit(scope.row)"
               >编辑</el-button
             >

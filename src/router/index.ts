@@ -21,8 +21,7 @@ const routes: Array<RouteConfig> = [
       {
         path: '/',
         name: 'home',
-        component: () =>
-          import(/* webpackChunkName: 'home' */ '@/views/home/index.vue')
+        redirect: '/course'
       },
       {
         path: '/role',
@@ -187,6 +186,21 @@ const routes: Array<RouteConfig> = [
           breadcrumb: [
             { title: '课程管理', path: '/course' },
             { title: '修改课程', path: '' }
+          ]
+        },
+        props: true
+      },
+      {
+        path: '/course/section/:courseId',
+        name: 'course-section',
+        component: () =>
+          import(
+            /* webpackChunkName: 'course-section' */ '@/views/course/section.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '课程管理', path: '/course' },
+            { title: '课程结构', path: '' }
           ]
         },
         props: true

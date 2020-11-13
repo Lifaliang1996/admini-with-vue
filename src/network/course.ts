@@ -60,3 +60,32 @@ export const saveOrUpdateCourse = (data: object) => {
     data
   })
 }
+
+// 获取课程章节信息
+export const getSectionAndLesson = (courseId: string | number) => {
+  return request({
+    method: 'GET',
+    url: '/boss/course/section/getSectionAndLesson',
+    params: {
+      courseId
+    }
+  })
+}
+
+// 添加或修改章节
+export const saveOrUpdateSection = (data: object) => {
+  return request({
+    method: 'POST',
+    url: '/boss/course/section/saveOrUpdateSection',
+    data
+  })
+}
+
+// 添加或修改课时
+export const saveOrUpdateLesson = (data: object) => {
+  return request({
+    method: 'POST',
+    url: '/boss/course/lesson/saveOrUpdate',
+    data
+  })
+}

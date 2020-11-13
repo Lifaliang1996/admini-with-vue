@@ -44,7 +44,7 @@
           label="用户ID"
         ></el-table-column>
         <el-table-column align="center" label="头像" width="100">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-avatar
               :src="scope.row.portrait"
               icon="el-icon-user-solid"
@@ -67,7 +67,7 @@
           label="注册时间"
         ></el-table-column>
         <el-table-column align="center" label="状态" width="80">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <i
               :title="scope.row.status === 'DISABLE' ? '禁用' : '正常'"
               class="status"
@@ -80,7 +80,7 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-button
               v-if="scope.row.status === 'ENABLE'"
               @click="handleForbidUser(scope.row.id)"

@@ -55,7 +55,12 @@ export default Vue.extend({
       }
 
       editor.create()
-      editor.txt.html(this.value)
+
+      // 请求到值了之后再给编辑器
+      const unwatch = this.$watch('value', (val: string) => {
+        editor.txt.html(val)
+        if (unwatch) unwatch()
+      })
     }
   }
 })
