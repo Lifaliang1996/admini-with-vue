@@ -167,7 +167,7 @@ const routes: Array<RouteConfig> = [
         name: 'course-create',
         component: () =>
           import(
-            /* webpackChunkName: 'course-create' */ '@/views/course/create.vue'
+            /* webpackChunkName: 'course-create-update' */ '@/views/course/create.vue'
           ),
         meta: {
           breadcrumb: [
@@ -175,6 +175,21 @@ const routes: Array<RouteConfig> = [
             { title: '添加课程', path: '' }
           ]
         }
+      },
+      {
+        path: '/course/update/:courseId',
+        name: 'course-update',
+        component: () =>
+          import(
+            /* webpackChunkName: 'course-create-update' */ '@/views/course/update.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '课程管理', path: '/course' },
+            { title: '修改课程', path: '' }
+          ]
+        },
+        props: true
       },
       {
         path: '/user',

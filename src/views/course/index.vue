@@ -31,7 +31,12 @@
             >查询搜索</el-button
           >
         </el-form>
-        <el-button @click="$router.push({ name: 'course-create' })" type="primary" icon="el-icon-plus">新建课程</el-button>
+        <el-button
+          @click="$router.push({ name: 'course-create' })"
+          type="primary"
+          icon="el-icon-plus"
+          >新建课程</el-button
+        >
       </el-row>
     </el-card>
 
@@ -42,7 +47,7 @@
           prop="id"
           align="center"
           label="ID"
-          width="40"
+          width="60"
         ></el-table-column>
         <el-table-column
           prop="courseName"
@@ -75,8 +80,19 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
-          <template>
-            <el-button size="mini">编辑</el-button>
+          <template slot-scope="scope">
+            <el-button
+              @click="
+                $router.push({
+                  name: 'course-update',
+                  params: {
+                    courseId: scope.row.id
+                  }
+                })
+              "
+              size="mini"
+              >编辑</el-button
+            >
             <el-button size="mini">内容管理</el-button>
           </template>
         </el-table-column>

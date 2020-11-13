@@ -16,6 +16,17 @@ export const getQueryCourses = (data: CoursesQuery) => {
   })
 }
 
+// 根据 ID 查询课程
+export const getCourseById = (courseId: string | number) => {
+  return request({
+    method: 'GET',
+    url: '/boss/course/getCourseById',
+    params: {
+      courseId
+    }
+  })
+}
+
 // 课程上下架
 export const changeState = (courseId: number, status: number) => {
   return request({
@@ -31,7 +42,7 @@ export const changeState = (courseId: number, status: number) => {
 // 上传图片
 export const uploadImage = (
   data: object,
-  onUploadProgress: ((progressEvent: any) => void) | undefined
+  onUploadProgress?: ((progressEvent: any) => void) | undefined
 ) => {
   return request({
     method: 'POST',

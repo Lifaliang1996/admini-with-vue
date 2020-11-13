@@ -1,5 +1,5 @@
 <template>
-  <create-update :isUpdate="true" />
+  <create-update is-update />
 </template>
 
 <script lang="ts">

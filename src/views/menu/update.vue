@@ -1,5 +1,5 @@
 <template>
-  <menu-create-update :isUpdate="true" />
+  <menu-create-update is-update />
 </template>
 
 <script lang="ts">
