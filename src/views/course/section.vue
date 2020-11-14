@@ -7,7 +7,15 @@
       >
     </div>
 
-    <el-tree :data="sections" :props="defaultProps" node-key="id" draggable>
+    <el-tree
+      :data="sections"
+      :props="defaultProps"
+      node-key="id"
+      draggable
+      default-expand-all
+      :allow-drop="handleAllowDrag"
+      @node-drop="handleDrop"
+    >
       <template v-slot="{ node, data }">
         <div class="inner">
           <span>{{ node.label }}</span>
@@ -17,32 +25,30 @@
             <el-button size="mini" @click="openSectionEdit(data)"
               >编辑</el-button
             >
-            <el-button
-              type="primary"
-              size="mini"
-              @click="openLessonCreate(data)"
+            <el-button type="primary" size="mini" @click="openLessonEdit(data)"
               >添加课时</el-button
             >
             <el-select
               size="mini"
               :value="data.status"
-              @change="handleCreateOrUpdateSection(data, $event)"
+              @change="changeSectionStatus(data, $event)"
             >
               <el-option :key="0" label="已隐藏" :value="0" />
               <el-option :key="1" label="未发布" :value="1" />
               <el-option :key="2" label="已发布" :value="2" />
             </el-select>
           </span>
+
           <!-- 课时操作 -->
           <span v-else>
-            <el-button size="mini" @click="openLessonEdit(data)"
+            <el-button size="mini" @click="openLessonEdit(null, data)"
               >编辑</el-button
             >
             <el-button type="success" size="mini">上传视频</el-button>
             <el-select
               size="mini"
               :value="data.status"
-              @change="handleCreateOrUpdateLesson(data, $event)"
+              @change="changeLessonStatus(data, $event)"
             >
               <el-option :key="0" label="已隐藏" :value="0" />
               <el-option :key="1" label="未发布" :value="1" />
@@ -54,94 +60,23 @@
     </el-tree>
 
     <!-- 章节编辑 -->
-    <el-dialog
-      class="add-dialog"
-      :title="isUpdate ? '修改章节' : '添加章节'"
-      :visible.sync="sectionDialogFormVisible"
-      @closed="closeSectionEdit"
-    >
-      <el-form
-        ref="sectionForm"
-        :model="sectionForm"
-        :rules="sectionRules"
-        label-width="80px"
-      >
-        <el-form-item label="课程名称" prop="courseName">
-          <el-input v-model="sectionForm.courseName" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="章节名称" prop="sectionName">
-          <el-input v-model="sectionForm.sectionName"></el-input>
-        </el-form-item>
-        <el-form-item label="章节描述">
-          <el-input v-model="sectionForm.description"></el-input>
-        </el-form-item>
-        <el-form-item label="章节排序">
-          <el-input v-model="sectionForm.orderNum" type="number">
-            <template #append>数字控制排序，数字越大越靠后</template>
-          </el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="sectionDialogFormVisible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          :disabled="sectionLoading"
-          @click="handleCreateOrUpdateSection"
-          >确 定</el-button
-        >
-      </div>
-    </el-dialog>
+    <section-create-update
+      v-model="sectionDialogFormVisible"
+      :course-id="courseId"
+      :course-name="courseName"
+      :current-edit="currentEditSection"
+      @success="loadSectionAndLesson"
+    />
 
     <!-- 课时编辑 -->
-    <el-dialog
-      class="add-dialog"
-      :title="isUpdate ? '修改课时' : '添加课时'"
-      :visible.sync="lessonDialogFormVisible"
-      @closed="closeLessonEdit"
-    >
-      <el-form
-        ref="lessonForm"
-        :model="lessonForm"
-        :rules="lessonRules"
-        label-width="80px"
-      >
-        <el-form-item label="课程名称" prop="courseName">
-          <el-input v-model="lessonForm.courseName" disabled />
-        </el-form-item>
-        <el-form-item label="章节名称" prop="sectionName">
-          <el-input v-model="lessonForm.sectionName" disabled />
-        </el-form-item>
-        <el-form-item label="课时名称" prop="sectionName">
-          <el-input v-model="lessonForm.theme" />
-        </el-form-item>
-        <el-form-item label="时长" prop="duration">
-          <el-input v-model="lessonForm.duration" type="number">
-            <template #append>分钟</template>
-          </el-input>
-        </el-form-item>
-        <el-form-item label="课时排序">
-          <el-input v-model="lessonForm.orderNum" type="number">
-            <template #append>数字控制排序，数字越大越靠后</template>
-          </el-input>
-        </el-form-item>
-        <el-form-item label="开放试听" prop="isFree">
-          <el-switch
-            v-model="lessonForm.isFree"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-          />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="lessonDialogFormVisible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          :disabled="lessonLoading"
-          @click="handleCreateOrUpdateLesson"
-          >确 定</el-button
-        >
-      </div>
-    </el-dialog>
+    <lesson-create-update
+      v-model="lessonDialogFormVisible"
+      :course-id="courseId"
+      :course-name="courseName"
+      :current-edit="currentEditLesson"
+      :current-section="currentEditSection"
+      @success="loadSectionAndLesson"
+    />
   </el-card>
 </template>
 
@@ -153,7 +88,9 @@ import {
   saveOrUpdateLesson,
   saveOrUpdateSection
 } from '@/network/course'
-import { Form } from 'element-ui'
+import { TreeNode } from 'element-ui/types/tree'
+import SectionCreateUpdate from './components/SectionCreateUpdate.vue'
+import LessonCreateUpdate from './components/LessonCreateUpdate.vue'
 
 export default Vue.extend({
   name: 'CourseSection',
@@ -173,51 +110,12 @@ export default Vue.extend({
         label: (data: { sectionName?: string; theme?: string }) =>
           data.sectionName || data.theme
       },
-      isUpdate: false,
-      // 章节弹出框是否显示
       sectionDialogFormVisible: false,
-      // 章节正在提交
-      sectionLoading: false,
-      // 章节表单
-      sectionForm: {
-        // id: '',
-        courseId: this.courseId,
-        courseName: '',
-        sectionName: '',
-        description: '',
-        orderNum: 0,
-        status: 0
-      },
-      // 章节表单验证
-      sectionRules: {
-        courseName: [{ required: true, message: '必填项', trigger: 'blur' }],
-        sectionName: [{ required: true, message: '必填项', trigger: 'blur' }]
-      },
-      // 课时弹出框是否显示
       lessonDialogFormVisible: false,
-      // 课时正在提交
-      lessonLoading: false,
-      // 课时表单
-      lessonForm: {
-        // id: 0,
-        courseId: this.courseId,
-        courseName: '',
-        sectionId: 0,
-        sectionName: '',
-        theme: '',
-        duration: 0,
-        isFree: false,
-        orderNum: 0,
-        status: 0
-      },
-      // 课时表单验证
-      lessonRules: {
-        courseName: [{ required: true, message: '必填项', trigger: 'blur' }],
-        sectionName: [{ required: true, message: '必填项', trigger: 'blur' }],
-        theme: [{ required: true, message: '必填项', trigger: 'blur' }],
-        duration: [{ required: true, message: '必填项', trigger: 'blur' }],
-        isFree: [{ required: true, message: '必填项', trigger: 'blur' }]
-      }
+      // 当前正在编辑的章节
+      currentEditSection: {},
+      // 当前正在编辑的课时
+      currentEditLesson: {}
     }
   },
 
@@ -232,7 +130,6 @@ export default Vue.extend({
       try {
         const { data } = await getCourseById(this.courseId)
         this.courseName = data.data.courseName
-        this.sectionForm.courseName = this.courseName
       } catch {}
     },
 
@@ -247,111 +144,99 @@ export default Vue.extend({
     // 打开章节编辑
     openSectionEdit (section: any) {
       if (section.id) {
-        this.isUpdate = true
-        this.sectionForm = {
-          courseName: this.courseName,
-          ...section
-        }
+        this.currentEditSection = section
+      } else {
+        this.currentEditSection = {}
       }
       this.sectionDialogFormVisible = true
     },
 
-    // 关闭章节编辑
-    closeSectionEdit () {
-      this.sectionForm = {
-        courseId: this.courseId,
-        courseName: this.courseName,
-        sectionName: '',
-        description: '',
-        orderNum: 0,
-        status: 0
-      }
-      this.isUpdate = false
-    },
-
-    async handleCreateOrUpdateSection (section: any, newStatus: number) {
-      this.sectionLoading = true
-      try {
-        if ([0, 1, 2].includes(newStatus)) {
-          // 更改状态
-          await saveOrUpdateSection({
-            ...section,
-            duration: section.durationNum || 0,
-            status: newStatus
-          })
-          section.status = newStatus
-          this.$message.success('更改章节状态成功')
-        } else {
-          // 修改整个
-          await (this.$refs.sectionForm as Form).validate()
-          await saveOrUpdateSection(this.sectionForm)
-          this.loadSectionAndLesson()
-          this.$message.success('操作章节成功')
-        }
-        this.sectionDialogFormVisible = false
-      } catch {}
-      this.sectionLoading = false
-    },
-
-    // 打开课时添加
-    openLessonCreate (section: any) {
-      this.lessonForm = {
-        courseId: this.courseId,
-        courseName: this.courseName,
-        sectionId: section.id,
-        sectionName: section.sectionName,
-        theme: '',
-        duration: 0,
-        isFree: false,
-        orderNum: 0,
-        status: 0
-      }
-      this.lessonDialogFormVisible = true
+    // 更改章节状态
+    async changeSectionStatus (section: any, newStatus: number) {
+      await saveOrUpdateSection({
+        ...section,
+        status: newStatus
+      })
+      section.status = newStatus
+      this.$message.success('更改章节状态成功')
     },
 
     // 打开课时编辑
-    openLessonEdit (lesson: any) {
-      this.isUpdate = true
-      const section: any = this.sections.find(
-        (section: any) => section.id === lesson.sectionId
-      )
-      this.lessonForm = {
-        ...lesson,
-        courseName: this.courseName,
-        sectionName: section.sectionName,
-        duration: lesson.durationNum
+    openLessonEdit (section: any, lesson: any) {
+      if (lesson?.theme) {
+        // 修改
+        this.currentEditLesson = lesson
+        this.currentEditSection =
+          this.sections.find(
+            (section: { id: number }) => section.id === lesson.sectionId
+          ) || {}
+      } else {
+        // 添加
+        this.currentEditLesson = {}
+        this.currentEditSection = section
       }
       this.lessonDialogFormVisible = true
     },
 
-    // 关闭课时编辑对
-    closeLessonEdit () {
-      this.isUpdate = false
+    // 更改课时状态
+    async changeLessonStatus (lesson: any, newStatus: number) {
+      await saveOrUpdateLesson({
+        ...lesson,
+        duration: lesson.durationNum || 0,
+        status: newStatus
+      })
+      lesson.status = newStatus
+      this.$message.success('更改课时状态成功')
     },
 
-    async handleCreateOrUpdateLesson (lesson: any, newStatus: number) {
-      this.lessonLoading = true
+    // 判断是否可拖动
+    handleAllowDrag (
+      draggingNode: TreeNode<number, any>,
+      dropNode: TreeNode<number, any>,
+      type: string
+    ) {
+      return (
+        draggingNode.data.sectionId === dropNode.data.sectionId &&
+        type !== 'inner'
+      )
+    },
+
+    // 拖拽成功排序
+    async handleDrop (
+      dragNode: TreeNode<number, any>,
+      dropNode: TreeNode<number, any>
+    ) {
       try {
-        if ([0, 1, 2].includes(newStatus)) {
-          // 更改状态
-          await saveOrUpdateLesson({
-            ...lesson,
-            duration: lesson.durationNum || 0,
-            status: newStatus
-          })
-          lesson.status = newStatus
-          this.$message.success('更改课时状态成功')
-        } else {
-          // 编辑整个
-          await (this.$refs.lessonForm as Form).validate()
-          await saveOrUpdateLesson(this.lessonForm)
-          this.loadSectionAndLesson()
-          this.$message.success('操作课时成功')
-        }
-        this.lessonDialogFormVisible = false
-      } catch {}
-      this.lessonLoading = false
+        const data = await Promise.all(
+          dropNode.parent?.childNodes.map(
+            (node: TreeNode<number, any>, index: number) => {
+              if (dragNode.data.lessonDTOS) {
+                // 拖动章节
+                return saveOrUpdateSection({
+                  id: node.data.id,
+                  orderNum: index
+                })
+              } else {
+                // 拖动课时
+                return saveOrUpdateLesson({
+                  id: node.data.id,
+                  orderNum: index
+                })
+              }
+            }
+          ) as []
+        )
+        this.$message.success('排序成功')
+        this.loadSectionAndLesson()
+      } catch {
+        this.$message.error('排序失败，请刷新重试')
+      }
     }
+  },
+
+  components: {
+    SectionCreateUpdate,
+    LessonCreateUpdate
   }
 })
 </script>
