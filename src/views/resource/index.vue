@@ -122,7 +122,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Form } from 'element-ui'
 import {
   getResourcePages,
   deleteResource,

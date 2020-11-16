@@ -33,7 +33,7 @@ const routes: Array<RouteConfig> = [
         }
       },
       {
-        path: '/role/allocate-menu/:roleId',
+        path: '/role/:roleId/allocate-menu',
         name: 'role-allocate-menu',
         component: () =>
           import(
@@ -48,7 +48,7 @@ const routes: Array<RouteConfig> = [
         }
       },
       {
-        path: '/role/allocate-resource/:roleId',
+        path: '/role/:roleId/allocate-resource',
         name: 'role-allocate-resource',
         component: () =>
           import(
@@ -86,7 +86,7 @@ const routes: Array<RouteConfig> = [
         }
       },
       {
-        path: '/menu/update/:id',
+        path: '/menu/:id/update',
         name: 'menu-update',
         component: () =>
           import(
@@ -139,7 +139,7 @@ const routes: Array<RouteConfig> = [
         }
       },
       {
-        path: '/resource/update/:id',
+        path: '/resource/:id/update',
         name: 'resource-update',
         component: () =>
           import(
@@ -176,7 +176,7 @@ const routes: Array<RouteConfig> = [
         }
       },
       {
-        path: '/course/update/:courseId',
+        path: '/course/:courseId/update',
         name: 'course-update',
         component: () =>
           import(
@@ -191,7 +191,7 @@ const routes: Array<RouteConfig> = [
         props: true
       },
       {
-        path: '/course/section/:courseId',
+        path: '/course/:courseId/section',
         name: 'course-section',
         component: () =>
           import(
@@ -201,6 +201,21 @@ const routes: Array<RouteConfig> = [
           breadcrumb: [
             { title: '课程管理', path: '/course' },
             { title: '课程结构', path: '' }
+          ]
+        },
+        props: true
+      },
+      {
+        path: '/course/:courseId/upload-video',
+        name: 'course-upload-video',
+        component: () =>
+          import(
+            /* webpackChunkName: 'course-upload-video' */ '@/views/course/upload-video.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '课程管理', path: '/course' },
+            { title: '上传视频', path: '' }
           ]
         },
         props: true

@@ -102,7 +102,12 @@
         </el-table-column>
       </el-table>
 
-      <el-dialog @closed="handleClosed" title="分配角色" :visible.sync="dialogVisible" width="30%">
+      <el-dialog
+        @closed="handleClosed"
+        title="分配角色"
+        :visible.sync="dialogVisible"
+        width="30%"
+      >
         <el-select v-model="roleIdList" multiple placeholder="请选择">
           <el-option
             v-for="role in roles"
@@ -139,7 +144,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Form } from 'element-ui'
 import { getUserPages, forbidUser, enableUser } from '@/network/user'
 import { getRoleAll, getRollByUser, allocateUserRoles } from '@/network/role'
 
@@ -198,7 +202,7 @@ export default Vue.extend({
 
   computed: {
     searchDate: {
-      get () {
+      get (): any[] {
         return [this.searchForm.startCreateTime, this.searchForm.endCreateTime]
       },
       set (date: Date[]) {
@@ -267,7 +271,10 @@ export default Vue.extend({
     // 给用户分配角色
     async handleAllocateUserRoles () {
       try {
-        const { data } = await allocateUserRoles(this.currentUserId, this.roleIdList)
+        const { data } = await allocateUserRoles(
+          this.currentUserId,
+          this.roleIdList
+        )
         if (data.data) {
           this.$message.success('分配角色成功')
         }
@@ -282,8 +289,7 @@ export default Vue.extend({
           this.loadUserPages()
           this.$message.success('禁用成功')
         }
-      } catch (error) {
-      }
+      } catch (error) {}
     },
     // 启用用用户
     async handleEnableUserr (userId: number) {
@@ -294,8 +300,7 @@ export default Vue.extend({
           this.loadUserPages()
           this.$message.success('启用成功')
         }
-      } catch (error) {
-      }
+      } catch (error) {}
     }
   }
 })

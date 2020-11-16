@@ -44,7 +44,21 @@
             <el-button size="mini" @click="openLessonEdit(null, data)"
               >编辑</el-button
             >
-            <el-button type="success" size="mini">上传视频</el-button>
+            <el-button
+              type="success"
+              size="mini"
+              @click="
+                $router.push({
+                  name: 'course-upload-video',
+                  pramas: { courseId: data.courseId },
+                  query: {
+                    sectionId: data.sectionId,
+                    lessonId: data.id
+                  }
+                })
+              "
+              >上传视频</el-button
+            >
             <el-select
               size="mini"
               :value="data.status"
@@ -132,7 +146,6 @@ export default Vue.extend({
         this.courseName = data.data.courseName
       } catch {}
     },
-
     // 获取章节信息
     async loadSectionAndLesson () {
       try {
@@ -140,7 +153,6 @@ export default Vue.extend({
         this.sections = data.data
       } catch {}
     },
-
     // 打开章节编辑
     openSectionEdit (section: any) {
       if (section.id) {
@@ -150,7 +162,6 @@ export default Vue.extend({
       }
       this.sectionDialogFormVisible = true
     },
-
     // 更改章节状态
     async changeSectionStatus (section: any, newStatus: number) {
       await saveOrUpdateSection({
@@ -160,7 +171,6 @@ export default Vue.extend({
       section.status = newStatus
       this.$message.success('更改章节状态成功')
     },
-
     // 打开课时编辑
     openLessonEdit (section: any, lesson: any) {
       if (lesson?.theme) {
@@ -177,7 +187,6 @@ export default Vue.extend({
       }
       this.lessonDialogFormVisible = true
     },
-
     // 更改课时状态
     async changeLessonStatus (lesson: any, newStatus: number) {
       await saveOrUpdateLesson({
@@ -188,7 +197,6 @@ export default Vue.extend({
       lesson.status = newStatus
       this.$message.success('更改课时状态成功')
     },
-
     // 判断是否可拖动
     handleAllowDrag (
       draggingNode: TreeNode<number, any>,
@@ -200,14 +208,13 @@ export default Vue.extend({
         type !== 'inner'
       )
     },
-
     // 拖拽成功排序
     async handleDrop (
       dragNode: TreeNode<number, any>,
       dropNode: TreeNode<number, any>
     ) {
       try {
-        const data = await Promise.all(
+        await Promise.all(
           dropNode.parent?.childNodes.map(
             (node: TreeNode<number, any>, index: number) => {
               if (dragNode.data.lessonDTOS) {

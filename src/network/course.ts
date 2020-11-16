@@ -61,13 +61,24 @@ export const saveOrUpdateCourse = (data: object) => {
   })
 }
 
-// 获取课程章节信息
+// 获取章节信息列表
 export const getSectionAndLesson = (courseId: string | number) => {
   return request({
     method: 'GET',
     url: '/boss/course/section/getSectionAndLesson',
     params: {
       courseId
+    }
+  })
+}
+
+// 获取单个章节
+export const getSectionById = (sectionId: string | number) => {
+  return request({
+    method: 'GET',
+    url: '/boss/course/section/getBySectionId',
+    params: {
+      sectionId
     }
   })
 }
@@ -87,5 +98,16 @@ export const saveOrUpdateLesson = (data: object) => {
     method: 'POST',
     url: '/boss/course/lesson/saveOrUpdate',
     data
+  })
+}
+
+// 获取单个课时
+export const getLessonById = (lessonId: number | string) => {
+  return request({
+    method: 'GET',
+    url: '/boss/course/lesson/getById',
+    params: {
+      lessonId
+    }
   })
 }
