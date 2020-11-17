@@ -1,6 +1,8 @@
 <template>
   <el-card class="box-card">
-    <div slot="header">{{ isUpdate ? '修改资源' : '添加资源' }}</div>
+    <template #header>
+      <div>{{ isUpdate ? '修改资源' : '添加资源' }}</div>
+    </template>
     <el-form ref="form" :model="resourceForm" :rules="rules" v-loading="isLoading" label-width="80px">
       <el-form-item label="资源名称" prop="name">
         <el-input v-model="resourceForm.name"></el-input>
@@ -42,6 +44,7 @@ import { getAllCategory, getResource, saveOrUpdate } from '@/network/resource'
 
 export default Vue.extend({
   name: 'ResourceCreateUpdate',
+
   props: {
     // 是否是修改
     isUpdate: {

@@ -8,6 +8,11 @@ import CreateOrUpdate from './components/CreateOrUpdate.vue'
 
 export default Vue.extend({
   name: 'CourseCreate',
+
+  metaInfo: {
+    title: '添加课程'
+  },
+
   components: {
     CreateOrUpdate
   }

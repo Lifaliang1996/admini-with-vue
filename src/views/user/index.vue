@@ -62,10 +62,13 @@
           label="手机号"
         ></el-table-column>
         <el-table-column
-          prop="createTime"
           align="center"
           label="注册时间"
-        ></el-table-column>
+        >
+          <template v-slot="scope">
+            <span>{{ formatDate(scope.row.createdTime) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column align="center" label="状态" width="80">
           <template v-slot="scope">
             <i
@@ -106,9 +109,8 @@
         @closed="handleClosed"
         title="分配角色"
         :visible.sync="dialogVisible"
-        width="30%"
       >
-        <el-select v-model="roleIdList" multiple placeholder="请选择">
+        <el-select v-model="roleIdList" multiple placeholder="请选择" style="margin-left: 80px;">
           <el-option
             v-for="role in roles"
             :key="role.id"
@@ -117,12 +119,14 @@
           >
           </el-option>
         </el-select>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="handleAllocateUserRoles"
-            >确 定</el-button
-          >
-        </span>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="handleAllocateUserRoles"
+              >确 定</el-button
+            >
+          </span>
+        </template>
       </el-dialog>
 
       <el-pagination
@@ -146,9 +150,17 @@
 import Vue from 'vue'
 import { getUserPages, forbidUser, enableUser } from '@/network/user'
 import { getRoleAll, getRollByUser, allocateUserRoles } from '@/network/role'
+import mixin from '@/mixin'
 
 export default Vue.extend({
   name: 'UserIndex',
+
+  metaInfo: {
+    title: '用户管理'
+  },
+
+  mixins: [mixin],
+
   data () {
     return {
       pickerOptions: {
@@ -306,4 +318,8 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+::v-deep .el-dialog {
+  width: 540px;
+}
+</style>

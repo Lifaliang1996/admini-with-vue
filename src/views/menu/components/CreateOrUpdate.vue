@@ -1,6 +1,8 @@
 <template>
   <el-card class="box-card">
-    <div slot="header">{{ isUpdate ? '修改菜单' : '添加菜单' }}</div>
+    <template #header>
+      <div>{{ isUpdate ? '修改菜单' : '添加菜单' }}</div>
+    </template>
     <el-form ref="form" :model="menuInfo" :rules="rules" label-width="80px">
       <el-form-item label="菜单名称" prop="name">
         <el-input v-model="menuInfo.name"></el-input>
@@ -56,6 +58,7 @@ import { createOrUpdateMenu, getEditMenuInfo } from '@/network/menu'
 
 export default Vue.extend({
   name: 'MenuCreate',
+
   props: {
     isUpdate: {
       type: Boolean,

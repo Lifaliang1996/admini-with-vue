@@ -1,8 +1,8 @@
 <template>
   <el-card v-loading="isLoading">
-    <div slot="header">
+    <template #header>
       <span>分配菜单</span>
-    </div>
+    </template>
     <el-tree
       ref="resourceTree"
       :data="roleResource"
@@ -27,6 +27,11 @@ import { getRoleResources, allocateRoleResources } from '@/network/resource'
 
 export default Vue.extend({
   name: 'RoleAllocateResource',
+
+  metaInfo: {
+    title: '分配资源'
+  },
+
   props: {
     roleId: {
       type: [Number, String],

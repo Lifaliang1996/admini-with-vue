@@ -8,6 +8,11 @@ import CreateOrUpdate from './components/CreateOrUpdate.vue'
 
 export default Vue.extend({
   name: 'CourseUpdate',
+
+  metaInfo: {
+    title: '更新课程'
+  },
+
   props: {
     courseId: {
       type: [String, Number],

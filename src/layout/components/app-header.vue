@@ -1,9 +1,22 @@
 <template>
   <div class="header">
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
-      <el-breadcrumb-item v-for="item in breadcrumb" :key="item.path" :to="item.path">{{ item.title }}</el-breadcrumb-item>
-    </el-breadcrumb>
+    <div class="left">
+      <!-- 折叠侧边栏 -->
+      <el-button class="trigger" type="text" @click="$emit('input', !value)"
+        ><i :class="value ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i
+      ></el-button>
+
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
+        <el-breadcrumb-item
+          v-for="item in breadcrumb"
+          :key="item.path"
+          :to="item.path"
+          >{{ item.title }}</el-breadcrumb-item
+        >
+      </el-breadcrumb>
+    </div>
+
     <el-dropdown>
       <span class="el-dropdown-link">
         <el-avatar
@@ -12,10 +25,14 @@
         ></el-avatar>
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>{{ userInfo.userName }}</el-dropdown-item>
-        <el-dropdown-item divided @click.native="logout">退出</el-dropdown-item>
-      </el-dropdown-menu>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item>{{ userInfo.userName }}</el-dropdown-item>
+          <el-dropdown-item divided @click.native="logout"
+            >退出</el-dropdown-item
+          >
+        </el-dropdown-menu>
+      </template>
     </el-dropdown>
   </div>
 </template>
@@ -26,6 +43,14 @@ import { getUserInfo } from '@/network/user'
 
 export default Vue.extend({
   name: 'AppHeader',
+
+  props: {
+    // 侧边菜单折叠
+    value: {
+      type: Boolean
+    }
+  },
+
   data () {
     return {
       userInfo: {}
@@ -33,7 +58,7 @@ export default Vue.extend({
   },
 
   computed: {
-    breadcrumb () {
+    breadcrumb (): string {
       return this.$route.meta.breadcrumb
     }
   },
@@ -56,12 +81,14 @@ export default Vue.extend({
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        this.$store.commit('setUser', null)
-        this.$router.push({
-          name: 'login'
+      })
+        .then(() => {
+          this.$store.commit('setUser', null)
+          this.$router.push({
+            name: 'login'
+          })
         })
-      }).catch()
+        .catch()
     }
   }
 })
@@ -73,6 +100,16 @@ export default Vue.extend({
   height: 100%;
   align-items: center;
   justify-content: space-between;
+
+  .left {
+    display: flex;
+    align-items: center;
+
+    .trigger {
+      font-size: 23px;
+      margin-right: 20px;
+    }
+  }
 
   .el-dropdown-link {
     display: flex;

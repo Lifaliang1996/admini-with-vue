@@ -8,6 +8,11 @@ import MenuCreateUpdate from './components/CreateOrUpdate.vue'
 
 export default Vue.extend({
   name: 'MenuUpdate',
+
+  metaInfo: {
+    title: '更新菜单'
+  },
+
   components: {
     MenuCreateUpdate
   }

@@ -33,6 +33,7 @@ import { uploadImage } from '@/network/course'
 
 export default Vue.extend({
   name: 'CourseUploadImage',
+
   props: {
     // 上传成功后的值
     value: {

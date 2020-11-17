@@ -1,11 +1,11 @@
 <template>
   <el-container class="layout">
-    <el-aside width="200px">
-      <app-aside />
+    <el-aside style="width: auto;">
+      <app-aside :is-collapse="isCollapse" />
     </el-aside>
     <el-container>
       <el-header>
-        <app-header />
+        <app-header v-model="isCollapse" />
       </el-header>
       <el-main>
         <router-view />
@@ -21,6 +21,13 @@ import AppHeader from './components/app-header.vue'
 
 export default Vue.extend({
   name: 'Layout',
+
+  data () {
+    return {
+      isCollapse: false
+    }
+  },
+
   components: {
     AppAside,
     AppHeader
@@ -40,7 +47,6 @@ export default Vue.extend({
 
 .el-aside {
   height: 100%;
-  background-color: #d3dce6;
 }
 
 .el-main {

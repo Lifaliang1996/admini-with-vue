@@ -49,12 +49,11 @@
       @closed="handleClosed"
       :title="isUpdate ? '修改分类' : '添加分类'"
       :visible.sync="dialogFormVisible"
-      style="min-width: 980px;"
     >
       <el-form
         :model="categoryForm"
         label-width="70px"
-        style="width: 60%; margin: auto"
+        style="margin: 0 20px;"
       >
         <el-form-item label="名称：">
           <el-input v-model="categoryForm.name"></el-input>
@@ -68,10 +67,10 @@
           ></el-input-number>
         </el-form-item>
       </el-form>
-      <div slot="footer">
+      <template #footer>
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="onSubmit">确 定</el-button>
-      </div>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -86,6 +85,11 @@ import {
 
 export default Vue.extend({
   name: 'ResourceCategory',
+
+  metaInfo: {
+    title: '资源分类'
+  },
+
   data () {
     return {
       categoryForm: {
@@ -170,4 +174,8 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+::v-deep .el-dialog {
+  width: 540px;
+}
+</style>

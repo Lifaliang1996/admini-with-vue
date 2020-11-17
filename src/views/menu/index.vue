@@ -1,11 +1,16 @@
 <template>
   <div>
     <el-card class="box-card">
-      <div slot="header">
-        <el-button size="small" @click="$router.push({ name: 'menu-create' })"
-          >添加菜单</el-button
-        >
-      </div>
+      <template #header>
+        <div>
+          <el-button
+            type="primary"
+            size="small"
+            @click="$router.push({ name: 'menu-create' })"
+            >添加菜单</el-button
+          >
+        </div>
+      </template>
       <el-table v-loading="isLoading" :data="allMenu" style="width: 100%">
         <el-table-column
           type="index"
@@ -62,6 +67,11 @@ import { getAllMenu, deleteMenu } from '@/network/menu'
 
 export default Vue.extend({
   name: 'MenuIndex',
+
+  metaInfo: {
+    title: '菜单管理'
+  },
+
   data () {
     return {
       allMenu: [],

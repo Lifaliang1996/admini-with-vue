@@ -30,6 +30,10 @@ import { login } from '@/network/user'
 
 export default Vue.extend({
   name: 'LoginIndex',
+  metaInfo: {
+    title: '登录'
+  },
+
   data () {
     return {
       user: {

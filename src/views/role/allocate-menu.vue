@@ -1,8 +1,8 @@
 <template>
   <el-card v-loading="isLoading">
-    <div slot="header">
+    <template #header>
       <span>分配菜单</span>
-    </div>
+    </template>
     <el-tree
       ref="menusTree"
       :data="roleMenus"
@@ -27,6 +27,11 @@ import { getRoleMenus, allocateRoleMenus } from '@/network/menu'
 
 export default Vue.extend({
   name: 'RoleAllocateMenu',
+
+  metaInfo: {
+    title: '分配菜单'
+  },
+
   props: {
     roleId: {
       type: [Number, String],

@@ -132,6 +132,11 @@ import { getQueryCourses, changeState } from '@/network/course'
 
 export default Vue.extend({
   name: 'CourseIndex',
+
+  metaInfo: {
+    title: '课程管理'
+  },
+
   data () {
     return {
       // 筛选条件

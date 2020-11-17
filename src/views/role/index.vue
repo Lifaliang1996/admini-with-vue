@@ -28,11 +28,11 @@
           align="center"
           label="角色描述"
         ></el-table-column>
-        <el-table-column
-          prop="createdTime"
-          align="center"
-          label="添加时间"
-        ></el-table-column>
+        <el-table-column align="center" label="添加时间">
+          <template v-slot="scope">
+            <span>{{ formatDate(scope.row.createdTime) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" align="center">
           <template v-slot="scope">
             <el-row>
@@ -80,14 +80,13 @@
       @closed="handleClosed"
       :title="isUpdate ? '修改角色' : '添加角色'"
       :visible.sync="dialogFormVisible"
-      style="min-width: 980px;"
     >
       <el-form
         ref="roleForm"
         :model="roleFormDate"
         :rules="rules"
         label-width="100px"
-        style="width: 60%; margin: auto"
+        style="margin: 0 20px;"
       >
         <el-form-item label="角色名称：" prop="name">
           <el-input v-model="roleFormDate.name"></el-input>
@@ -102,10 +101,10 @@
           ></el-input>
         </el-form-item>
       </el-form>
-      <div slot="footer">
+      <template #footer>
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="onSubmit">确 定</el-button>
-      </div>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -114,9 +113,17 @@
 import Vue from 'vue'
 import { Form } from 'element-ui'
 import { getRoleAll, createOrUpdateRole, deleteRole } from '@/network/role'
+import mixin from '@/mixin'
 
 export default Vue.extend({
   name: 'RoleIndex',
+
+  metaInfo: {
+    title: '角色管理'
+  },
+
+  mixins: [mixin],
+
   data () {
     return {
       // 角色表单
@@ -218,4 +225,8 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+::v-deep .el-dialog {
+  width: 640px;
+}
+</style>

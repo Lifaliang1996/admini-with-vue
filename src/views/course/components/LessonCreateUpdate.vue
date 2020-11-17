@@ -38,15 +38,17 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="closeLessonEdit">取 消</el-button>
-      <el-button
-        type="primary"
-        :disabled="lessonLoading"
-        @click="handleCreateOrUpdateLesson"
-        >确 定</el-button
-      >
-    </div>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="closeLessonEdit">取 消</el-button>
+        <el-button
+          type="primary"
+          :disabled="lessonLoading"
+          @click="handleCreateOrUpdateLesson"
+          >确 定</el-button
+        >
+      </div>
+    </template>
   </el-dialog>
 </template>
 
@@ -57,6 +59,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'LessonCreateUpdate',
+
   props: {
     // 是否显示
     value: {

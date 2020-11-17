@@ -83,11 +83,11 @@
           align="center"
           label="描述"
         ></el-table-column>
-        <el-table-column
-          prop="createdTime"
-          align="center"
-          label="添加时间"
-        ></el-table-column>
+        <el-table-column align="center" label="添加时间">
+          <template v-slot="scope">
+            <span>{{ formatDate(scope.row.createdTime) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" align="center" min-width="150">
           <template v-slot="scope">
             <el-button size="mini" @click="handleEdit(scope.row)"
@@ -127,9 +127,17 @@ import {
   deleteResource,
   getAllCategory
 } from '@/network/resource'
+import mixin from '@/mixin'
 
 export default Vue.extend({
   name: 'ResourceIndex',
+
+  metaInfo: {
+    title: '资源管理'
+  },
+
+  mixins: [mixin],
+
   data () {
     return {
       // 筛选条件

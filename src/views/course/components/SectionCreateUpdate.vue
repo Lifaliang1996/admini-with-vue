@@ -26,15 +26,17 @@
         </el-input>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="closeSectionEdit">取 消</el-button>
-      <el-button
-        type="primary"
-        :disabled="sectionLoading"
-        @click="handleCreateOrUpdateSection"
-        >确 定</el-button
-      >
-    </div>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="closeSectionEdit">取 消</el-button>
+        <el-button
+          type="primary"
+          :disabled="sectionLoading"
+          @click="handleCreateOrUpdateSection"
+          >确 定</el-button
+        >
+      </div>
+    </template>
   </el-dialog>
 </template>
 
@@ -45,6 +47,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'SectionCreateUpdate',
+
   props: {
     // 是否显示
     value: {

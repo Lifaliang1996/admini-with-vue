@@ -1,11 +1,13 @@
 <template>
   <el-card class="course-sections">
-    <div class="header" slot="header">
-      <span>{{ courseName }}</span>
-      <el-button type="primary" icon="el-icon-plus" @click="openSectionEdit"
-        >添加章节</el-button
-      >
-    </div>
+    <template #header>
+      <div class="header">
+        <span>{{ courseName }}</span>
+        <el-button type="primary" icon="el-icon-plus" @click="openSectionEdit"
+          >添加章节</el-button
+        >
+      </div>
+    </template>
 
     <el-tree
       :data="sections"
@@ -108,6 +110,11 @@ import LessonCreateUpdate from './components/LessonCreateUpdate.vue'
 
 export default Vue.extend({
   name: 'CourseSection',
+
+  metaInfo: {
+    title: '内容管理'
+  },
+
   props: {
     courseId: {
       type: [String, Number],

@@ -7,7 +7,11 @@
 <script>
 import Vue from 'vue'
 export default Vue.extend({
-  name: 'Error404'
+  name: 'Error404',
+
+  metaInfo: {
+    title: '页面不存在'
+  }
 })
 </script>
 

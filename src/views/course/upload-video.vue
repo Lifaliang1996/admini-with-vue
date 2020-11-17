@@ -107,6 +107,10 @@ import { getCourseById, getLessonById, getSectionById } from '@/network/course'
 export default Vue.extend({
   name: 'CourseUploadVideo',
 
+  metaInfo: {
+    title: '上传视频'
+  },
+
   props: {
     courseId: {
       type: [String, Number],
@@ -242,7 +246,7 @@ export default Vue.extend({
               uploadInfo,
               aliyunInfo.uploadAuth,
               aliyunInfo.uploadAddress,
-              aliyunInfo.imageId ?? aliyunInfo.videoId
+              aliyunInfo.imageId || aliyunInfo.videoId
             )
           } catch {
             this.btnLoading = false

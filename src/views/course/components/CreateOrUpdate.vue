@@ -2,15 +2,17 @@
   <div>
     <el-card v-loading="isLoading">
       <!-- 步骤条 -->
-      <div slot="header">
-        <el-steps :active="stepActive" finish-status="success" simple>
-          <el-step
-            v-for="(step, index) in stepTitles"
-            :key="index"
-            :title="step"
-          ></el-step>
-        </el-steps>
-      </div>
+      <template #header>
+        <div>
+          <el-steps :active="stepActive" finish-status="success" simple>
+            <el-step
+              v-for="(step, index) in stepTitles"
+              :key="index"
+              :title="step"
+            ></el-step>
+          </el-steps>
+        </div>
+      </template>
 
       <!-- 表单 -->
       <el-form
@@ -91,17 +93,17 @@
         <div v-show="stepActive === 2">
           <el-form-item label="售卖价格" prop="discounts">
             <el-input v-model="course.discounts" type="number">
-              <template slot="append">元</template>
+              <template #append>元</template>
             </el-input>
           </el-form-item>
           <el-form-item label="原价">
             <el-input v-model="course.price" type="number">
-              <template slot="append">元</template>
+              <template #append>元</template>
             </el-input>
           </el-form-item>
           <el-form-item label="销量">
             <el-input v-model="course.sales" type="number">
-              <template slot="append">单</template>
+              <template #append>单</template>
             </el-input>
           </el-form-item>
           <el-form-item label="活动标签">
@@ -139,12 +141,12 @@
             </el-form-item>
             <el-form-item label="秒杀价格">
               <el-input v-model="course.activityCourseDTO.amount" type="number">
-                <template slot="append">元</template>
+                <template #append>元</template>
               </el-input>
             </el-form-item>
             <el-form-item label="秒杀库存">
               <el-input v-model="course.activityCourseDTO.stock" type="number">
-                <template slot="append">单</template>
+                <template #append>单</template>
               </el-input>
             </el-form-item>
           </div>
@@ -196,6 +198,7 @@ import { Form } from 'element-ui'
 
 export default Vue.extend({
   name: 'CourseCreateOrUpdate',
+
   props: {
     isUpdate: {
       type: Boolean,

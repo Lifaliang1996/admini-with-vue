@@ -8,6 +8,11 @@ import CreateUpdate from './components/CreateOrUpdate.vue'
 
 export default Vue.extend({
   name: 'ResourceUpdate',
+
+  metaInfo: {
+    title: '更新资源'
+  },
+
   components: {
     CreateUpdate
   }
