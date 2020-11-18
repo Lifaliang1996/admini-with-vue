@@ -18,11 +18,11 @@
           align="center"
           label="分类名称"
         ></el-table-column>
-        <el-table-column
-          prop="createdTime"
-          align="center"
-          label="添加时间"
-        ></el-table-column>
+        <el-table-column align="center" label="添加时间">
+          <template v-slot="scope">
+            <span>{{ formatDate(scope.row.createdTime) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="sort"
           align="center"
@@ -50,11 +50,7 @@
       :title="isUpdate ? '修改分类' : '添加分类'"
       :visible.sync="dialogFormVisible"
     >
-      <el-form
-        :model="categoryForm"
-        label-width="70px"
-        style="margin: 0 20px;"
-      >
+      <el-form :model="categoryForm" label-width="70px" style="margin: 0 20px;">
         <el-form-item label="名称：">
           <el-input v-model="categoryForm.name"></el-input>
         </el-form-item>
@@ -82,9 +78,12 @@ import {
   createOrUpdateCategory,
   deleteCategory
 } from '@/network/resource'
+import mixin from '@/mixin'
 
 export default Vue.extend({
   name: 'ResourceCategory',
+
+  mixins: [mixin],
 
   metaInfo: {
     title: '资源分类'

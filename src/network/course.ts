@@ -39,19 +39,6 @@ export const changeState = (courseId: number, status: number) => {
   })
 }
 
-// 上传图片
-export const uploadImage = (
-  data: object,
-  onUploadProgress?: ((progressEvent: any) => void) | undefined
-) => {
-  return request({
-    method: 'POST',
-    url: '/boss/course/upload',
-    data,
-    onUploadProgress
-  })
-}
-
 // 添加或修改课程
 export const saveOrUpdateCourse = (data: object) => {
   return request({

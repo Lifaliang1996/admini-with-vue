@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { uploadImage } from '@/network/course'
+import { uploadImage } from '@/network/upload'
 import Vue from 'vue'
 import E from 'wangeditor'
 
@@ -43,7 +43,7 @@ export default Vue.extend({
         const uploadHeap: Promise<any>[] = resultFiles.map((file: File) => {
           const fd = new FormData()
           fd.append('file', file)
-          return uploadImage(fd)
+          return uploadImage('/boss/course/upload', fd)
         })
 
         try {

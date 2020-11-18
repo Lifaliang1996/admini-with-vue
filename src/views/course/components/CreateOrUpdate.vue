@@ -82,10 +82,16 @@
         <!-- 课程封面 -->
         <div v-show="stepActive === 1">
           <el-form-item label="课程封面">
-            <upload-image v-model="course.courseListImg" />
+            <upload-image
+              v-model="course.courseListImg"
+              url="/boss/course/upload"
+            />
           </el-form-item>
           <el-form-item label="介绍封面">
-            <upload-image v-model="course.courseImgUrl" />
+            <upload-image
+              v-model="course.courseImgUrl"
+              url="/boss/course/upload"
+            />
           </el-form-item>
         </div>
 
@@ -191,7 +197,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import UploadImage from './UploadImage.vue'
+import UploadImage from '@/components/upload-image/index.vue'
 import TextEditor from '@/components/text-editor/index.vue'
 import { getCourseById, saveOrUpdateCourse } from '@/network/course'
 import { Form } from 'element-ui'

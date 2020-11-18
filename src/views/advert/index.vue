@@ -1,7 +1,12 @@
 <template>
   <el-card>
     <template #header>
-      <el-button type="primary" size="mini">添加广告</el-button>
+      <el-button
+        type="primary"
+        size="mini"
+        @click="$router.push({ name: 'advert-create' })"
+        >添加广告</el-button
+      >
     </template>
 
     <el-table :data="pageList">
@@ -16,11 +21,11 @@
         label="广告名称"
         align="center"
       ></el-table-column>
-      <el-table-column
-        prop="link"
-        label="广告位置"
-        align="center"
-      ></el-table-column>
+      <el-table-column label="广告位置" align="center">
+        <template v-slot="scope">
+          <span>{{ adSpaces[scope.row.spaceId] }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="广告图片" align="center">
         <template v-slot="scope">
           <el-image
@@ -35,11 +40,10 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="时间" align="center">
+      <el-table-column label="时间" align="center" min-width="200px">
         <template v-slot="scope">
-          <div>{{ scope.row.startTimeFormatString }}</div>
-          <span class="el-icon-bottom"></span>
-          <div>{{ scope.row.endTimeFormatString }}</div>
+          <div>开始：{{ scope.row.startTimeFormatString }}</div>
+          <div>结束：{{ scope.row.endTimeFormatString }}</div>
         </template>
       </el-table-column>
       <el-table-column label="上线/下线" width="100px" align="center">
@@ -57,8 +61,17 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center">
-        <template>
-          <el-button size="mini">编辑</el-button>
+        <template v-slot="scope">
+          <el-button
+            size="mini"
+            @click="
+              $router.push({
+                name: 'advert-update',
+                params: { id: scope.row.id }
+              })
+            "
+            >编辑</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -80,7 +93,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { getAdList, updateAdStatus } from '@/network/advert'
+import { getAdList, getAllSpaces, updateAdStatus } from '@/network/advert'
 
 export default Vue.extend({
   name: 'AdvertIndex',
@@ -92,6 +105,8 @@ export default Vue.extend({
   data () {
     return {
       advertList: [],
+      // 广告位 id: 广告位 name
+      adSpaces: {},
       paging: {
         current: 1,
         size: 10
@@ -108,6 +123,7 @@ export default Vue.extend({
 
   created () {
     this.loadAdList()
+    this.loadAllAdSpace()
   },
 
   methods: {
@@ -119,6 +135,18 @@ export default Vue.extend({
             advert.disabed = false
             return advert
           })
+        }
+      } catch {}
+    },
+    async loadAllAdSpace () {
+      try {
+        const { data } = await getAllSpaces()
+        if (data.success) {
+          const spaces = {}
+          data.content.forEach((space: { id: number; name: string }) => {
+            ;(spaces as any)[space.id] = space.name
+          })
+          this.adSpaces = spaces
         }
       } catch {}
     },

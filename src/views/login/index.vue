@@ -11,12 +11,16 @@
     >
       <h2>登 录</h2>
       <el-form-item label="手机号" prop="phone">
-        <el-input v-model="user.phone"></el-input>
+        <el-input v-model="user.phone" prefix-icon="el-icon-user-solid"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input type="password" v-model="user.password"></el-input>
+        <el-input v-model="user.password" type="password" prefix-icon="el-icon-key"></el-input>
       </el-form-item>
-      <el-button class="login-btn" type="primary" :loading="isLoading" @click="onSubmit"
+      <el-button
+        class="login-btn"
+        type="primary"
+        :loading="isLoading"
+        @click="onSubmit"
         >登录</el-button
       >
     </el-form>
@@ -37,7 +41,7 @@ export default Vue.extend({
   data () {
     return {
       user: {
-        phone: '18201288771',
+        phone: '',
         password: ''
       },
       rules: {
@@ -74,7 +78,7 @@ export default Vue.extend({
           this.$message.success('登录成功！')
 
           // 重定向到之前的页面或首页
-          const backPath = this.$route.query.back as string || '/'
+          const backPath = (this.$route.query.back as string) || '/'
           this.$router.push(backPath)
         }
       } catch (error) {}

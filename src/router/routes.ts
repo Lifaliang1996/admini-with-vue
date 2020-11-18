@@ -235,12 +235,70 @@ const routes: Array<RouteConfig> = [
         }
       },
       {
+        path: '/advert/create',
+        name: 'advert-create',
+        component: () =>
+          import(
+            /* webpackChunkName: 'advert-create-update' */ '@/views/advert/create.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '广告管理', path: '/advert' },
+            { title: '添加广告', path: '' }
+          ]
+        }
+      },
+      {
+        path: '/advert/:id/update',
+        name: 'advert-update',
+        component: () =>
+          import(
+            /* webpackChunkName: 'advert-create-update' */ '@/views/advert/update.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '广告管理', path: '/advert' },
+            { title: '修改广告', path: '' }
+          ]
+        },
+        props: true
+      },
+      {
         path: '/advert-space',
         name: 'advert-space',
         component: () =>
           import(
             /* webpackChunkName: 'advert-space' */ '@/views/advert-space/index.vue'
           )
+      },
+      {
+        path: '/advert-space/create',
+        name: 'advert-space-create',
+        component: () =>
+          import(
+            /* webpackChunkName: 'advert-space-create-update' */ '@/views/advert-space/create.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '广告位管理', path: '/advert-space' },
+            { title: '添加广告位', path: '' }
+          ]
+        }
+      },
+      {
+        path: '/advert-space/:id/update',
+        name: 'advert-space-update',
+        component: () =>
+          import(
+            /* webpackChunkName: 'advert-space-create-update' */ '@/views/advert-space/update.vue'
+          ),
+        meta: {
+          breadcrumb: [
+            { title: '广告位管理', path: '/advert-space' },
+            { title: '修改广告位', path: '' }
+          ]
+        },
+        props: true
       }
     ]
   },

@@ -22,17 +22,17 @@
 
     <!-- 提示 -->
     <el-tag>
-      {{ `格式要求：230*300px，JPG、PNG格式，小于${limit}KB` }}
+      {{ `格式要求：JPG、PNG格式，小于${limit}KB` }}
     </el-tag>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { uploadImage } from '@/network/course'
+import { uploadImage } from '@/network/upload'
 
 export default Vue.extend({
-  name: 'CourseUploadImage',
+  name: 'LiUploadImage',
 
   props: {
     // 上传成功后的值
@@ -42,6 +42,10 @@ export default Vue.extend({
     limit: {
       type: Number,
       default: 500
+    },
+    url: {
+      type: String,
+      required: true
     }
   },
 
@@ -78,8 +82,8 @@ export default Vue.extend({
           )
         }
 
-        const { data } = await uploadImage(fd, onUploadProgress)
-        this.$emit('input', data.data.name)
+        const { data } = await uploadImage(this.url, fd, onUploadProgress)
+        this.$emit('input', data?.data?.name ?? data?.content?.name)
       } catch {}
       setTimeout(() => {
         this.isUploading = false
@@ -91,14 +95,14 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-::v-deep.progress {
+::v-deep .progress {
   margin-top: -10px;
   .el-progress-bar {
     width: 195px;
   }
 }
 
-::v-deep.avatar-uploader {
+::v-deep .avatar-uploader {
   & .el-upload {
     border: 1px dashed #c9c9c9;
     border-radius: 6px;
