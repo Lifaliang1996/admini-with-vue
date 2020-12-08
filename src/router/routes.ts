@@ -17,7 +17,7 @@ const routes: Array<RouteConfig> = [
       {
         path: '/',
         name: 'home',
-        redirect: '/course'
+        component: () => import('@/views/home/index.vue')
       },
       {
         path: '/role',

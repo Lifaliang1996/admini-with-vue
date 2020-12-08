@@ -1,6 +1,6 @@
 <template>
   <div class="aside" :class="{ collapse: isCollapse }">
-    <div class="logo" title="回到首页" @click="$router.push('/')">
+    <div class="logo" title="回到首页" @click="toHome">
       <i class="el-icon-magic-stick icon"></i>
       <h1>Light Edu</h1>
     </div>
@@ -86,6 +86,13 @@ export default Vue.extend({
   computed: {
     defaultActive () {
       return this.$route.fullPath.replace(/^(\/[^/]+?)(\/.+)/, '$1')
+    }
+  },
+
+  methods: {
+    toHome () {
+      if (this.$route.fullPath === '/') return
+      this.$router.push('/')
     }
   }
 })

@@ -50,6 +50,6 @@ export default Vue.extend({
 }
 
 .el-main {
-  background-color: #e9eef3;
+  background-color: #ebeff3;
 }
 </style>

@@ -3,8 +3,6 @@ const express = require('express')
 const path = require('path')
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-const apiProxy = createProxyMiddleware('/api', { target: 'http://www.example.org' });
-
 const app = express()
 
 app.use(express.static(path.join(__dirname, '../dist')))
