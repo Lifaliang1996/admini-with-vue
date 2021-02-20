@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    {
+      "source": "/boss/(.*)",
+      "destination": "http://eduboss.lagou.com"
+    },
+    {
+      "source": "/front/(.*)",
+      "destination": "http://edufront.lagou.com"
+    }
+  ]
+}
+
