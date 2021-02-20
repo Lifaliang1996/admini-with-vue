@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.14.0/lib/theme-chalk/input.css">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title>微光教育</title>
   </head>
@@ -18,16 +17,19 @@
     </noscript>
     <div id="app"></div>
     
+    <!-- 模块 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuex@3.4.0/dist/vuex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-router@3.2.0/dist/vue-router.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/element-ui@2.14.1/lib/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.0/dist/echarts.min.js"></script>
 
+    
     <!-- 阿里云所需 -->
-    <script src="/aliyun-upload-sdk-1.5.0/lib/es6-promise.min.js"></script>
-    <script src="/aliyun-upload-sdk-1.5.0//lib/aliyun-oss-sdk-5.3.1.min.js"></script>
-    <script src="/aliyun-upload-sdk-1.5.0//aliyun-upload-sdk-1.5.0.min.js"></script>
+    <script src="/aliyun-upload-sdk-1.5.0/lib/es6-promise.min.js" defer></script>
+    <script src="/aliyun-upload-sdk-1.5.0//lib/aliyun-oss-sdk-5.3.1.min.js" defer></script>
+    <script src="/aliyun-upload-sdk-1.5.0//aliyun-upload-sdk-1.5.0.min.js" defer></script>
+
     <!-- built files will be auto injected -->
   </body>
 </html>
